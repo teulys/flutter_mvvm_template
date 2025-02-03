@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_mvvm_template/ui/core/theme/app_theme.dart';
+import 'package:my_flutter_mvvm_template/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class HomeViewModel extends ChangeNotifier {
   int _countNumber = 0;
   bool _isDarkMode = false;
+
+  HomeViewModel({required isDarkMode}) {
+    _isDarkMode = isDarkMode;
+  }
 
   int get countNumber => _countNumber;
 
@@ -20,13 +25,11 @@ class HomeViewModel extends ChangeNotifier {
 
   bool get isDarkMode => _isDarkMode;
 
-  void changeTheme(BuildContext context) {
-    notifyListeners();
-    bool isDarkMode =
-        Provider.of<ThemeProvider>(context, listen: false).isDarkMode;
-    _isDarkMode = isDarkMode;
-    Provider.of<ThemeProvider>(context, listen: false)
-        .setThemeMode(!isDarkMode);
-    // ThemeProvider().setThemeMode(_isDarkMode);
+  void changeTheme(BuildContext context) async {
+    _isDarkMode = await Cache.readData('isDarkMode') as bool? ?? false;
+
+    _isDarkMode = !_isDarkMode;
+
+    Provider.of<ThemeProvider>(context, listen: false).setThemeMode(isDarkMode);
   }
 }

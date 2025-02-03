@@ -3,7 +3,16 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Cache {
-  static void saveData(String key, dynamic value) async {
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    bool? initIsDarkMode = prefs.getBool("isDarkMode");
+    if (initIsDarkMode == null) {
+      prefs.setBool("isDarkMode", false);
+    }
+  }
+
+  static Future<void> saveData(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
     if (value is int) {
       prefs.setInt(key, value);

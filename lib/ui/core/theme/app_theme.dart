@@ -4,6 +4,8 @@ import 'package:my_flutter_mvvm_template/ui/core/theme/theme_provider.dart';
 class ThemeProvider extends BaseThemeProvider {
   int _index = 0;
 
+  ThemeProvider({required super.isDarkMode});
+
   get index => _index;
 
   setNavIndex(int index) {

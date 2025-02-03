@@ -4,16 +4,21 @@ import 'package:my_flutter_mvvm_template/ui/core/theme/app_theme.dart';
 
 import 'package:my_flutter_mvvm_template/ui/home/widget/home_widget.dart';
 import 'package:my_flutter_mvvm_template/ui/view_model.dart';
+import 'package:my_flutter_mvvm_template/utils/cache_manager.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Cache().init();
+
+  bool isDarkMode = await Cache.readData('isDarkMode') as bool? ?? false;
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(
+            create: (_) => ThemeProvider(isDarkMode: isDarkMode)),
       ],
       child: EasyLocalization(
           supportedLocales: [
@@ -34,6 +39,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -42,7 +49,7 @@ class MyApp extends StatelessWidget {
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
-      home: HomeWidget(viewModel: HomeViewModel()),
+      home: HomeWidget(viewModel: HomeViewModel(isDarkMode: isDarkMode)),
     );
   }
 }
