@@ -68,6 +68,15 @@ class AppTheme {
   ThemeData get lightTheme => light!;
   ThemeData get darkTheme => dark!;
 
+  LinearGradient get linearGradient => LinearGradient(
+        begin: Alignment.topLeft, // Inicio del degradado
+        end: Alignment.bottomRight, // Fin del degradado
+        colors: [
+          Color(0xFF54C0CC), // Azul claro
+          Color(0xFF7EA08E), // Verde medio
+        ],
+      );
+
   AppTheme copyWith({
     ThemeData? light,
     ThemeData? dark,

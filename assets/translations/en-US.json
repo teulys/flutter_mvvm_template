@@ -1,4 +1,11 @@
 {
-    "appName": "Application name",
-    "counterText": "You have pushed the button this many times: {}"
+    "appName": "Bnb Manager",
+    "counterText": "You have pushed the button this many times: {}",
+    "singUp": "Sign Up",
+    "singIn": "Login",
+    "emailAdr": "Email Address", 
+    "exampleEmail": "example@mail.com",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "orLoginWith": "----------------- Or login with -----------------"
 }

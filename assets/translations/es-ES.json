@@ -1,4 +1,11 @@
 {
-    "appName": "Nombre de la aplicación",
-    "counterText": "Has presionado esta cantidad de veces: {}"
+    "appName": "Bnb Manager",
+    "counterText": "Has presionado esta cantidad de veces: {}",
+    "singUp": "Registrarse",
+    "singIn": "Iniciar Sesión",
+    "emailAdr": "Dirección de correo electrónico", 
+    "exampleEmail": "ejemplo@correo.com",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "orLoginWith": "-------------- O inicia sesión con --------------"
 }
