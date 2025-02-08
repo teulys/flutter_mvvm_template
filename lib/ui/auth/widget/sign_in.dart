@@ -11,51 +11,75 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: AppTheme().linearGradient,
         ),
-        child: Center(
-          child: Column(
-            spacing: 20,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("BnB Manager",
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
-              customField(
-                  text: 'exampleEmail'.tr(),
-                  label: 'emailAdr'.tr(),
-                  icon: Icons.email,
-                  controller: viewModel.emailController),
-              customField(
-                  text: '**********',
-                  label: 'password'.tr(),
-                  icon: Icons.email,
-                  isPassword: true,
-                  controller: viewModel.passwordController),
-              Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 40),
-                child: Text('forgotPassword'.tr(),
-                    style: TextStyle(color: Colors.white)),
-              ),
-              SizedBox(height: 10),
-              CustomButton().darkButton(('singIn').tr(),
-                  () => viewModel.signInWithEmailAndPassword()),
-              SizedBox(height: 10),
-              Text('orLoginWith'.tr(), style: TextStyle(color: Colors.white)),
-              SizedBox(height: 10),
-              CustomButton().darkButtonWithImage(
-                  'assets/images/google_logo.png',
-                  'oogle',
-                  () => viewModel.signInWithEmailAndPassword()),
-            ],
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              spacing: 20,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: size.height * 0.1),
+                Text("BnB Manager",
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(height: 10),
+                customField(
+                    text: 'exampleEmail'.tr(),
+                    label: 'emailAdr'.tr(),
+                    icon: Icons.email,
+                    controller: viewModel.emailController),
+                customField(
+                    text: '**********',
+                    label: 'password'.tr(),
+                    icon: Icons.lock,
+                    isPassword: true,
+                    controller: viewModel.passwordController),
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 40),
+                  child: GestureDetector(
+                    onTap: () => viewModel.goToForgotPassword(context),
+                    child: Text('forgotPassword'.tr(),
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+                SizedBox(height: 10),
+                CustomButton().darkButton(('singIn').tr(),
+                    () => viewModel.signInWithEmailAndPassword()),
+                SizedBox(height: 10),
+                Text('orLoginWith'.tr(), style: TextStyle(color: Colors.white)),
+                SizedBox(height: 10),
+                CustomButton().darkButtonWithImage(
+                    'assets/images/google_logo.png',
+                    'oogle',
+                    () => viewModel.signInWithEmailAndPassword()),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('notHaveAccount'.tr(),
+                        style: TextStyle(color: Colors.white)),
+                    GestureDetector(
+                        onTap: () => viewModel.goToSignUp(context),
+                        child: Text('singUp'.tr(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.1),
+              ],
+            ),
           ),
         ),
       ),

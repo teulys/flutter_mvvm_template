@@ -41,10 +41,8 @@ class AuthSupabaseService extends AuthService {
   @override
   Future<Sessions?> signUpWithEmailAndPassword(
       String email, String password) async {
-    final AuthResponse res = await supabase.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+    final AuthResponse res =
+        await supabase.auth.signUp(email: email, password: password);
 
     return _mapSession(res);
   }
@@ -52,7 +50,7 @@ class AuthSupabaseService extends AuthService {
   @override
   Future<Sessions?> verifyOTP(String email, String otp) async {
     final AuthResponse res = await supabase.auth
-        .verifyOTP(email: email, token: otp, type: OtpType.signup);
+        .verifyOTP(email: email, token: otp, type: OtpType.email);
 
     return _mapSession(res);
   }

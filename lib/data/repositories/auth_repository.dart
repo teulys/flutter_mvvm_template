@@ -1,4 +1,5 @@
 import 'package:my_flutter_mvvm_template/data/services/auth/auth_services.dart';
+import 'package:my_flutter_mvvm_template/domain/models/session.dart';
 
 class AuthRepository {
   final AuthService _authService;
@@ -21,8 +22,14 @@ class AuthRepository {
     await _authService.resetPassword(email);
   }
 
-  Future<void> verifyOTP(String email, String otp) async {
-    await _authService.verifyOTP(email, otp);
+  Future<bool> verifyOTP(String email, String otp) async {
+    Sessions? session = await _authService.verifyOTP(email, otp);
+
+    if (session != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<void> signInWithGoogle() async {

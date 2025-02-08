@@ -34,6 +34,7 @@ dependencies:
   shared_preferences:
   provider:
   easy_localization:
+  pin_code_fields: ^8.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

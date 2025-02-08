@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-Widget customField({
-  required String text,
-  required String label,
-  IconData? icon,
-  bool? isPassword,
-  TextEditingController? controller,
-  bool? addClearButton,
-  TextInputType? keyboardType,
-}) {
+Widget customField(
+    {required String text,
+    required String label,
+    IconData? icon,
+    bool? isPassword,
+    TextEditingController? controller,
+    bool? addClearButton,
+    TextInputType? keyboardType,
+    Color? borderColor}) {
   return Padding(
     padding: const EdgeInsets.only(left: 40, right: 40),
     child: Column(
@@ -22,6 +22,7 @@ Widget customField({
           height: 10,
         ),
         TextFormField(
+          style: const TextStyle(color: Colors.white),
           keyboardType: keyboardType ?? TextInputType.text,
           controller: controller,
           obscureText: isPassword ?? false,
@@ -55,7 +56,9 @@ Widget customField({
               borderRadius: BorderRadius.circular(10),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white, width: 3),
+              borderSide: BorderSide(
+                  color: (borderColor != null) ? borderColor : Colors.white,
+                  width: 3),
               borderRadius: BorderRadius.circular(10),
             ),
             // contentPadding: const EdgeInsets.symmetric(vertical: 20.0),

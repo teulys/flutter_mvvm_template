@@ -7,5 +7,17 @@
     "exampleEmail": "example@mail.com",
     "password": "Password",
     "forgotPassword": "Forgot Password?",
-    "orLoginWith": "----------------- Or login with -----------------"
+    "orLoginWith": "----------------- Or login with -----------------",
+    "notHaveAccount": "Don't have an account? ",
+    "confirmPassword": "Confirm Password",
+    "orSignUpWith": "----------------- Or sign up with -----------------",
+    "alreadyHaveAccount": "Already have an account? ",
+    "validateForm": "Please fill out this field",
+    "error": "Error",
+    "otpError": "Please enter the complete OTP",
+    "verify": "Verify",
+    "otpTextMessenge": "Enter the 6-digit code sent to your email: {}",
+    "ok": "OK",
+    "resend": "Resend",
+    "remaingOtp": "Remaining time to resend OTP: {} seconds"
 }

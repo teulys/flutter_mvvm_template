@@ -14,7 +14,6 @@ class AppTheme {
         ThemeData(
           brightness: Brightness.light,
           primarySwatch: AppColors.teal,
-          // bottomAppBarColor: Colors.white,
           scaffoldBackgroundColor: const Color.fromARGB(255, 222, 255, 252),
           appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
@@ -24,6 +23,23 @@ class AppTheme {
             ),
             backgroundColor: AppColors.teal,
             iconTheme: IconThemeData(color: Colors.white),
+          ),
+          textTheme: const TextTheme(
+            displayLarge: TextStyle(color: Colors.white),
+            displayMedium: TextStyle(color: Colors.white),
+            displaySmall: TextStyle(color: Colors.white),
+            headlineLarge: TextStyle(color: Colors.white),
+            headlineMedium: TextStyle(color: Colors.white),
+            headlineSmall: TextStyle(color: Colors.white),
+            titleLarge: TextStyle(color: Colors.white),
+            titleMedium: TextStyle(color: Colors.white),
+            titleSmall: TextStyle(color: Colors.white),
+            bodyLarge: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color: Colors.white),
+            bodySmall: TextStyle(color: Colors.white),
+            labelLarge: TextStyle(color: Colors.white),
+            labelMedium: TextStyle(color: Colors.white),
+            labelSmall: TextStyle(color: Colors.white),
           ),
           navigationBarTheme: const NavigationBarThemeData(
             backgroundColor: AppColors.teal,
@@ -45,6 +61,19 @@ class AppTheme {
           ),
           bottomAppBarTheme: const BottomAppBarTheme(color: AppColors.teal),
           useMaterial3: true,
+          dialogTheme: const DialogTheme(
+            backgroundColor: AppColors.space,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+            contentTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         );
 
     dark = dark ??
@@ -55,6 +84,23 @@ class AppTheme {
             textTheme: ButtonTextTheme.primary,
             buttonColor: Colors.white,
           ),
+          textTheme: const TextTheme(
+            displayLarge: TextStyle(color: Colors.white),
+            displayMedium: TextStyle(color: Colors.white),
+            displaySmall: TextStyle(color: Colors.white),
+            headlineLarge: TextStyle(color: Colors.white),
+            headlineMedium: TextStyle(color: Colors.white),
+            headlineSmall: TextStyle(color: Colors.white),
+            titleLarge: TextStyle(color: Colors.white),
+            titleMedium: TextStyle(color: Colors.white),
+            titleSmall: TextStyle(color: Colors.white),
+            bodyLarge: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color: Colors.white),
+            bodySmall: TextStyle(color: Colors.white),
+            labelLarge: TextStyle(color: Colors.white),
+            labelMedium: TextStyle(color: Colors.white),
+            labelSmall: TextStyle(color: Colors.white),
+          ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: AppColors.space,
             selectedItemColor: AppColors.teal,
@@ -62,6 +108,19 @@ class AppTheme {
             showSelectedLabels: true,
           ),
           useMaterial3: true,
+          dialogTheme: const DialogTheme(
+            backgroundColor: AppColors.space,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+            contentTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         );
   }
 
@@ -74,6 +133,15 @@ class AppTheme {
         colors: [
           Color(0xFF54C0CC), // Azul claro
           Color(0xFF7EA08E), // Verde medio
+        ],
+      );
+
+  LinearGradient get darkGradient => LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFF232526), // Gris oscuro
+          Color(0xFF414345), // Gris más claro
         ],
       );
 

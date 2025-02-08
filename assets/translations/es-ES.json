@@ -7,5 +7,17 @@
     "exampleEmail": "ejemplo@correo.com",
     "password": "Contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?",
-    "orLoginWith": "-------------- O inicia sesión con --------------"
+    "orLoginWith": "-------------- O inicia sesión con --------------",
+    "notHaveAccount": "¿No tienes una cuenta? ",
+    "confirmPassword": "Confirmar Contraseña",
+    "orSignUpWith": "-------------- O regístrate con --------------",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta? ",
+    "validateForm": "Por favor, rellena este campo",
+    "error": "Error",
+    "otpError": "Por favor, ingresa el OTP completo",
+    "verify": "Verificar",
+    "otpTextMessenge": "Ingresa el código de 6 dígitos enviado a tu correo electrónico: {}",
+    "ok": "OK",
+    "resend": "Reenviar",
+    "remaingOtp": "Tiempo restante para reenviar OTP: {} segundos"
 }

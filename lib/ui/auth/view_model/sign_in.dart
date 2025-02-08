@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_mvvm_template/data/repositories/auth_repository.dart';
 
-class SignInViewModel {
+class SignInViewModel extends ChangeNotifier {
   final AuthRepository _authRepository;
 
   SignInViewModel(this._authRepository);
@@ -16,11 +16,30 @@ class SignInViewModel {
   }
 
   Future<void> signInWithGoogle() async {
-    await _authRepository.signInWithGoogle();
+    try {
+      await _authRepository.signInWithGoogle();
+    } catch (e) {
+      print(e);
+      //TODO: show alert dialog
+    }
   }
 
   Future<void> forgotPassword() async {
-    String email = emailController.text;
-    await _authRepository.resetPassword(email);
+    try {
+      String email = emailController.text;
+      await _authRepository.resetPassword(email);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void goToSignUp(BuildContext context) {
+    // Navigate to the sign up page
+    Navigator.pushNamed(context, '/signUp');
+  }
+
+  void goToForgotPassword(BuildContext context) {
+    // Navigate to the forgot password page
+    Navigator.pushNamed(context, '/forgot_password');
   }
 }
