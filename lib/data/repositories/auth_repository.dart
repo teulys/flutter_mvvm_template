@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:my_flutter_mvvm_template/data/services/auth/auth_services.dart';
-import 'package:my_flutter_mvvm_template/domain/models/session.dart';
+import 'package:my_flutter_mvvm_template/domain/models/models.dart';
+import 'package:my_flutter_mvvm_template/utils/utils.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepository {
   final AuthService _authService;
@@ -10,8 +13,22 @@ class AuthRepository {
     await _authService.signOut();
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
-    await _authService.signInWithEmailAndPassword(email, password);
+  Future<Result<String>> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      Result<Sessions> sessions =
+          await _authService.signInWithEmailAndPassword(email, password);
+
+      if (sessions is Ok) {
+        return Result.ok("Login successful");
+      } else {
+        return Result.error((sessions as Error).error);
+      }
+    } catch (e) {
+      // Handle the error appropriately here
+      print('Error signing in: $e');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
@@ -22,13 +39,13 @@ class AuthRepository {
     await _authService.resetPassword(email);
   }
 
-  Future<bool> verifyOTP(String email, String otp) async {
-    Sessions? session = await _authService.verifyOTP(email, otp);
+  Future<Result<String>> verifyOTP(String email, String otp) async {
+    Result<Sessions> session = await _authService.verifyOTP(email, otp);
 
-    if (session != null) {
-      return true;
+    if (session is Ok) {
+      return Result.ok("OTP verified");
     } else {
-      return false;
+      return Result.error((session as Error).error);
     }
   }
 

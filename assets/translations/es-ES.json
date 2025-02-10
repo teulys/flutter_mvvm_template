@@ -19,5 +19,8 @@
     "otpTextMessenge": "Ingresa el código de 6 dígitos enviado a tu correo electrónico: {}",
     "ok": "OK",
     "resend": "Reenviar",
-    "remaingOtp": "Tiempo restante para reenviar OTP: {} segundos"
+    "remaingOtp": "Tiempo restante para reenviar OTP: {} segundos",
+    "loginError": "Correo electrónico o contraseña incorrectos",
+    "authFail": "Autenticación fallida",
+    "generalError": "Ocurrió un error inesperado"
 }

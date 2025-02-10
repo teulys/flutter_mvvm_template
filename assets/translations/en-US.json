@@ -19,5 +19,9 @@
     "otpTextMessenge": "Enter the 6-digit code sent to your email: {}",
     "ok": "OK",
     "resend": "Resend",
-    "remaingOtp": "Remaining time to resend OTP: {} seconds"
+    "remaingOtp": "Remaining time to resend OTP: {} seconds",
+    "loginError": "Incorrect email or password",
+    "authFail": "Authentication failed",
+    "invalidSession": "Invalid login credentials",
+    "generalError": "An unexpected error occurred"
 }

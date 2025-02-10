@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_mvvm_template/data/repositories/repositories.dart';
+import 'package:my_flutter_mvvm_template/utils/validators.dart';
 
 class SignUpViewModel extends ChangeNotifier {
   SignUpViewModel(this._repository) {
@@ -27,28 +28,14 @@ class SignUpViewModel extends ChangeNotifier {
     final confirmPassword = confirmPasswordController.text;
     final email = emailController.text;
 
-    isPasswordValid.value = _validatePassword(password);
+    isPasswordValid.value = ValidatePassword(password);
     isConfirmPasswordValid.value =
         password == confirmPassword && confirmPassword.isNotEmpty;
-    isMailValid.value = _validateEmail(email);
+    isMailValid.value = ValidateEmail(email);
 
     isFormValid.value = isPasswordValid.value &&
         isConfirmPasswordValid.value &&
         isMailValid.value;
-  }
-
-  bool _validateEmail(String email) {
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    return emailRegex.hasMatch(email);
-  }
-
-  bool _validatePassword(String password) {
-    final hasUppercase = password.contains(RegExp(r'[A-Z]'));
-    final hasLowercase = password.contains(RegExp(r'[a-z]'));
-    final hasDigits = password.contains(RegExp(r'[0-9]'));
-    final hasMinLength = password.length >= 8;
-
-    return hasUppercase && hasLowercase && hasDigits && hasMinLength;
   }
 
   Future<void> signUpWithEmailAndPassword(BuildContext context) async {

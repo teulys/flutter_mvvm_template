@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_mvvm_template/data/repositories/auth_repository.dart';
+import 'package:my_flutter_mvvm_template/utils/utils.dart';
 
 class ValidateOptViewModel extends ChangeNotifier {
   ValidateOptViewModel(this._repository);
@@ -51,9 +52,9 @@ class ValidateOptViewModel extends ChangeNotifier {
 
     startTimer();
 
-    bool isOtpOk = await _repository.verifyOTP(mail, otp);
+    Result<String> isOtpOk = await _repository.verifyOTP(mail, otp);
 
-    if (isOtpOk) {
+    if (isOtpOk is Ok) {
       Navigator.of(context).pushReplacementNamed('/home');
     } else {
       showDialog(

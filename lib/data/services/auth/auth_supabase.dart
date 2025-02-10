@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:my_flutter_mvvm_template/data/services/auth/auth_services.dart';
 import 'package:my_flutter_mvvm_template/domain/models/models.dart';
+import 'package:my_flutter_mvvm_template/utils/utils.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,14 +19,34 @@ class AuthSupabaseService extends AuthService {
   }
 
   @override
-  Future<Sessions?> signInWithEmailAndPassword(
+  Future<Result<Sessions>> signInWithEmailAndPassword(
       String email, String password) async {
-    final AuthResponse res = await supabase.auth.signUp(
-      email: email,
-      password: password,
-    );
+    try {
+      final AuthResponse res = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
 
-    return _mapSession(res);
+      Sessions? session = _mapSession(res);
+
+      if (session != null) {
+        return Result.ok(session);
+      } else {
+        return Result.error(Exception('invalidSession'.tr()));
+      }
+    } on AuthApiException catch (e) {
+      // Handle specific AuthApiException
+      if (e.statusCode == 400) {
+        return Result.error(Exception('invalidSession'.tr()));
+      } else {
+        print('Authentication failed: ${e.message}');
+        return Result.error(Exception('authFail'.tr()));
+      }
+    } catch (e) {
+      // Handle any other exceptions
+      print('An unexpected error occurred: ${e.toString()}');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   @override
@@ -39,20 +61,52 @@ class AuthSupabaseService extends AuthService {
   }
 
   @override
-  Future<Sessions?> signUpWithEmailAndPassword(
+  Future<Result<Sessions>> signUpWithEmailAndPassword(
       String email, String password) async {
-    final AuthResponse res =
-        await supabase.auth.signUp(email: email, password: password);
+    try {
+      final AuthResponse res =
+          await supabase.auth.signUp(email: email, password: password);
 
-    return _mapSession(res);
+      Sessions? session = _mapSession(res);
+
+      if (session != null) {
+        return Result.ok(session);
+      } else {
+        return Result.error(Exception('generalError'.tr()));
+      }
+    } catch (e) {
+      // Handle any other exceptions
+      print('An unexpected error occurred: ${e.toString()}');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   @override
-  Future<Sessions?> verifyOTP(String email, String otp) async {
-    final AuthResponse res = await supabase.auth
-        .verifyOTP(email: email, token: otp, type: OtpType.email);
+  Future<Result<Sessions>> verifyOTP(String email, String otp) async {
+    try {
+      final AuthResponse res = await supabase.auth
+          .verifyOTP(email: email, token: otp, type: OtpType.email);
 
-    return _mapSession(res);
+      Sessions? session = _mapSession(res);
+
+      if (session != null) {
+        return Result.ok(session);
+      } else {
+        return Result.error(Exception('otpError'.tr()));
+      }
+    } on AuthApiException catch (e) {
+      // Handle specific AuthApiException
+      if (e.statusCode == 400) {
+        return Result.error(Exception('invalidOTP'.tr()));
+      } else {
+        print('Authentication failed: ${e.message}');
+        return Result.error(Exception('generalError'.tr()));
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('An unexpected error occurred: ${e.toString()}');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   Sessions? _mapSession(AuthResponse res) {
@@ -75,6 +129,19 @@ class AuthSupabaseService extends AuthService {
     } else {
       return null;
     }
+  }
+
+  Users? _mapUser(AuthResponse res) {
+    final User? user = res.user;
+
+    return (user != null)
+        ? Users(
+            id: user.id,
+            aud: user.aud,
+            email: user.email ?? '',
+            role: user.role,
+          )
+        : null;
   }
 
   @override
