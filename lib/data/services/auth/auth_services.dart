@@ -6,7 +6,7 @@ abstract class AuthService {
       String email, String password);
   Future<Result<Sessions>> signUpWithEmailAndPassword(
       String email, String password);
-  Future<Sessions?> signInWithGoogle();
+  Future<Result<Sessions?>> signInWithGoogle();
   Future<Result<Sessions>> verifyOTP(String email, String otp);
   Future<Sessions?> resetPassword(String email);
   Future<void> signOut();

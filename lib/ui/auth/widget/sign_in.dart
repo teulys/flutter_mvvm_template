@@ -81,7 +81,7 @@ class Login extends StatelessWidget {
                 CustomButton().darkButtonWithImage(
                     'assets/images/google_logo.png',
                     'oogle',
-                    () => viewModel.signInWithGoogle()),
+                    () => viewModel.signInWithGoogle(context)),
                 SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

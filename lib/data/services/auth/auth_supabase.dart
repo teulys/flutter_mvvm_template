@@ -1,4 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_flutter_mvvm_template/data/services/auth/auth_services.dart';
 import 'package:my_flutter_mvvm_template/domain/models/models.dart';
 import 'package:my_flutter_mvvm_template/utils/utils.dart';
@@ -50,9 +52,55 @@ class AuthSupabaseService extends AuthService {
   }
 
   @override
-  Future<Sessions?> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<Result<Sessions?>> signInWithGoogle() async {
+    try {
+      await dotenv.load(fileName: ".env");
+
+      final webClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID'];
+      final iosClientId = dotenv.env['GOOGLE_IOS_CLIENT_ID'];
+
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        clientId: iosClientId,
+        serverClientId: webClientId,
+      );
+      final googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final accessToken = googleAuth.accessToken;
+      final idToken = googleAuth.idToken;
+
+      if (accessToken == null) {
+        return Result.error(Exception('No Access Token found.'));
+      }
+      if (idToken == null) {
+        return Result.error(Exception('No ID Token found.'));
+      }
+
+      final AuthResponse res = await supabase.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+
+      Sessions? session = _mapSession(res);
+
+      if (session != null) {
+        return Result.ok(session);
+      } else {
+        return Result.error(Exception('invalidSession'.tr()));
+      }
+    } on AuthApiException catch (e) {
+      // Handle specific AuthApiException
+      if (e.statusCode == 400) {
+        return Result.error(Exception('invalidSession'.tr()));
+      } else {
+        print('Authentication failed: ${e.message}');
+        return Result.error(Exception('authFail'.tr()));
+      }
+    } catch (e) {
+      // Handle any other exceptions
+      print('An unexpected error occurred: ${e.toString()}');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   @override

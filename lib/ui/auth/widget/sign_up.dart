@@ -89,10 +89,7 @@ class SignUp extends StatelessWidget {
                             return CustomButton().darkButtonWithImage(
                                 'assets/images/google_logo.png',
                                 'oogle',
-                                () => isValid
-                                    ? viewModel
-                                        .signUpWithEmailAndPassword(context)
-                                    : null);
+                                () => viewModel.singUpWithGoogle(context));
                           },
                         ),
                         SizedBox(height: 10),

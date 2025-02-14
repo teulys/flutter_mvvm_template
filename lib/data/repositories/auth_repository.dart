@@ -31,8 +31,22 @@ class AuthRepository {
     }
   }
 
-  Future<void> signUpWithEmailAndPassword(String email, String password) async {
-    await _authService.signUpWithEmailAndPassword(email, password);
+  Future<Result<String>> signUpWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      Result<Sessions> sesion =
+          await _authService.signUpWithEmailAndPassword(email, password);
+
+      if (sesion is Ok) {
+        return Result.ok("Sign up successful");
+      } else {
+        return Result.error((sesion as Error).error);
+      }
+    } catch (e) {
+      // Handle the error appropriately here
+      print('Error signing up: $e');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   Future<void> resetPassword(String email) async {
@@ -49,8 +63,14 @@ class AuthRepository {
     }
   }
 
-  Future<void> signInWithGoogle() async {
-    await _authService.signInWithGoogle();
+  Future<Result<String>> signInWithGoogle() async {
+    Result<Sessions?> session = await _authService.signInWithGoogle();
+
+    if (session is Ok) {
+      return Result.ok("Login successful");
+    } else {
+      return Result.error((session as Error).error);
+    }
   }
 
   Future<void> resendOTP(String email) async {

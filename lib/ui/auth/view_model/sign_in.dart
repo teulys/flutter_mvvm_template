@@ -68,13 +68,30 @@ class SignInViewModel extends ChangeNotifier {
     );
   }
 
-  Future<void> signInWithGoogle() async {
-    try {
-      await _authRepository.signInWithGoogle();
-    } catch (e) {
-      print(e);
-      //TODO: show alert dialog
+  Future<void> signInWithGoogle(BuildContext context) async {
+    isLoading.value = true;
+
+    Result<String> session = await _authRepository.signInWithGoogle();
+
+    isLoading.value = false;
+
+    if (session is Error) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Error'),
+                content: Text((session as Error).error.toString()),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('OK'),
+                  )
+                ],
+              ));
+      return;
     }
+
+    Navigator.pushNamed(context, '/home');
   }
 
   Future<void> forgotPassword() async {

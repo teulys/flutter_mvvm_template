@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_mvvm_template/data/repositories/repositories.dart';
+import 'package:my_flutter_mvvm_template/utils/utils.dart';
 import 'package:my_flutter_mvvm_template/utils/validators.dart';
 
 class SignUpViewModel extends ChangeNotifier {
@@ -46,10 +47,26 @@ class SignUpViewModel extends ChangeNotifier {
         isConfirmPasswordValid.value) {
       isLoading.value = true;
 
-      await _repository.signUpWithEmailAndPassword(
+      Result<String> result = await _repository.signUpWithEmailAndPassword(
           emailController.text, passwordController.text);
 
       isLoading.value = false;
+
+      if (result is Error) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('Error'),
+                  content: Text((result as Error).error.toString()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK'),
+                    )
+                  ],
+                ));
+        return;
+      }
 
       Navigator.pushNamed(context, '/validateOTP', arguments: {
         'email': emailController.text,
@@ -72,5 +89,31 @@ class SignUpViewModel extends ChangeNotifier {
 
   Future<void> goToSingIn(BuildContext context) async {
     Navigator.pushNamed(context, '/signIn');
+  }
+
+  Future<void> singUpWithGoogle(BuildContext context) async {
+    isLoading.value = true;
+
+    Result<String> session = await _repository.signInWithGoogle();
+
+    isLoading.value = false;
+
+    if (session is Error) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Error'),
+                content: Text((session as Error).error.toString()),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('OK'),
+                  )
+                ],
+              ));
+      return;
+    }
+
+    Navigator.pushNamed(context, '/home');
   }
 }

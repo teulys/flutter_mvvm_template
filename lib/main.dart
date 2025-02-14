@@ -17,7 +17,6 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Cache().init();
   await dotenv.load(fileName: ".env");
-  dotenv.env['VAR_NAME'];
 
   final supabaseUrl = dotenv.env['SUPABASE_URL'];
   final supabaseKey = dotenv.env['SUPABASE_KEY'];
@@ -29,7 +28,7 @@ void main() async {
 
   await Supabase.initialize(url: supabaseUrl!, anonKey: supabaseKey!);
 
-  bool isDarkMode = await Cache.readData('isDarkMode') as bool? ?? false;
+  bool isDarkMode = await Cache.readData('isDarkMode') as bool? ?? true;
 
   runApp(
     MultiProvider(
@@ -70,7 +69,6 @@ class MyApp extends StatelessWidget {
       darkTheme: MyTheme().darkTheme,
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
       initialRoute: '/signOptions',
-      //home: HomeWidget(viewModel: HomeViewModel(isDarkMode: isDarkMode)),
       routes: {
         '/home': (context) =>
             HomeWidget(viewModel: HomeViewModel(isDarkMode: isDarkMode)),

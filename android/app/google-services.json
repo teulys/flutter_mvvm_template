@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "223327064145",
+    "project_id": "bnb-manager-a439f",
+    "storage_bucket": "bnb-manager-a439f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223327064145:android:0138b92191ac9089cf6870",
+        "android_client_info": {
+          "package_name": "com.teulys.bnbmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223327064145-f47fethnrfr5vvoto87heoql15qi3qor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teulys.bnbmanager",
+            "certificate_hash": "2bf684f776c6b15876029ccaa256ef1169473e12"
+          }
+        },
+        {
+          "client_id": "223327064145-h2a3c108uaj8o4tropkvt6rbgjhbmh5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBunJShwQt1Y-pX3PF10U-yjdz8-nR4EYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223327064145-h2a3c108uaj8o4tropkvt6rbgjhbmh5p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "223327064145-ig943i6ll86ovuhbnebfqcsvvfma593t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.teulys.bnbmanager"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
