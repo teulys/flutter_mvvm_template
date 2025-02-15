@@ -22,7 +22,7 @@ class SignOptionsView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/images/bnb_logo.png'),
-              Text("BnB Manager",
+              Text('appName'.tr(),
                   style: TextStyle(
                       fontSize: 30,
                       color: Colors.white,

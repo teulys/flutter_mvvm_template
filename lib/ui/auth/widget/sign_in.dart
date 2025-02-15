@@ -26,7 +26,7 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: size.height * 0.1),
-                Text("BnB Manager",
+                Text('appName'.tr(),
                     style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,

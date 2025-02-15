@@ -23,5 +23,8 @@
     "loginError": "Incorrect email or password",
     "authFail": "Authentication failed",
     "invalidSession": "Invalid login credentials",
-    "generalError": "An unexpected error occurred"
+    "generalError": "An unexpected error occurred",
+    "resetPwdSusses": "Password updated successfully.",
+    "resetPwdError": "Error updating password",
+    "changePwd": "Change Password"
 }

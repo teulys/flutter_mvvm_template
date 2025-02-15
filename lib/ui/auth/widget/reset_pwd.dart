@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:my_flutter_mvvm_template/ui/auth/view_model/reset_pwd.dart';
 import 'package:my_flutter_mvvm_template/ui/core/theme/theme_manager.dart';
 import 'package:my_flutter_mvvm_template/ui/widgets.dart';
 
-class SignUp extends StatelessWidget {
-  const SignUp({super.key, required this.viewModel});
+class ResetPwdView extends StatelessWidget {
+  const ResetPwdView({super.key, required this.viewModel});
 
-  final SignUpViewModel viewModel;
+  final ResetPwdViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -78,34 +79,10 @@ class SignUp extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         CustomButton().darkButton(
-                            ('singUp').tr(),
-                            () =>
-                                viewModel.signUpWithEmailAndPassword(context)),
-                        Text('orSignUpWith'.tr(),
-                            style: TextStyle(color: Colors.white)),
-                        ValueListenableBuilder<bool>(
-                          valueListenable: viewModel.isMailValid,
-                          builder: (context, isValid, child) {
-                            return CustomButton().darkButtonWithImage(
-                                'assets/images/google_logo.png',
-                                'oogle',
-                                () => viewModel.singUpWithGoogle(context));
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('alreadyHaveAccount'.tr(),
-                                style: TextStyle(color: Colors.white)),
-                            GestureDetector(
-                                onTap: () => viewModel.goToSingIn(context),
-                                child: Text('singIn'.tr(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))),
-                          ],
-                        ),
+                            ('changePwd').tr(),
+                            () => (viewModel.isFormValid.value == true)
+                                ? viewModel.resetPassword(context)
+                                : null),
                         SizedBox(height: size.height * 0.1),
                       ],
                     ),

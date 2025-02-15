@@ -80,6 +80,8 @@ class MyApp extends StatelessWidget {
             SignUp(viewModel: SignUpViewModel(AuthRepository(authService))),
         '/validateOTP': (context) => ValidateOpt(
             viewModel: ValidateOptViewModel(AuthRepository(authService))),
+        '/resetPwd': (context) => ResetPwdView(
+            viewModel: ResetPwdViewModel(AuthRepository(authService))),
       },
     );
   }

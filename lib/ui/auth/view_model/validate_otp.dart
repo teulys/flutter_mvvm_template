@@ -28,7 +28,8 @@ class ValidateOptViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> validateOpt(BuildContext context, String mail) async {
+  Future<void> validateOpt(BuildContext context, String mail,
+      {String? password}) async {
     String otp = otpController.text;
 
     if (otp.length != 6) {
@@ -52,7 +53,9 @@ class ValidateOptViewModel extends ChangeNotifier {
 
     startTimer();
 
-    Result<String> isOtpOk = await _repository.verifyOTP(mail, otp);
+    Result<String> isOtpOk = (password == null)
+        ? await _repository.verifyOTP(mail, otp)
+        : await _repository.changePwd(mail, otp, password);
 
     if (isOtpOk is Ok) {
       Navigator.of(context).pushReplacementNamed('/home');
@@ -76,7 +79,7 @@ class ValidateOptViewModel extends ChangeNotifier {
   }
 
   Future<void> resendOTP(BuildContext context, String mail) async {
-    await _repository.resendOTP(mail);
+    await _repository.resetPassword(mail);
     startTimer();
   }
 

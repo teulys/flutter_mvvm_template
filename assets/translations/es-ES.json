@@ -22,5 +22,8 @@
     "remaingOtp": "Tiempo restante para reenviar OTP: {} segundos",
     "loginError": "Correo electrónico o contraseña incorrectos",
     "authFail": "Autenticación fallida",
-    "generalError": "Ocurrió un error inesperado"
+    "generalError": "Ocurrió un error inesperado",
+    "resetPwdSusses": "Contraseña actualizada correctamente.",
+    "resetPwdError": "Error al actualizar la contraseña",
+    "changePwd": "Cambiar Contraseña"
 }

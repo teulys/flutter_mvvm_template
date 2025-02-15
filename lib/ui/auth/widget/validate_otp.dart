@@ -11,8 +11,11 @@ class ValidateOpt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String email = (ModalRoute.of(context)?.settings.arguments
-        as Map<String, dynamic>)['email'] as String;
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final String email = args['email'] as String;
+    final String? password = args['password'] as String?;
+
     final appTheme = AppTheme();
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final gradient =
@@ -67,7 +70,7 @@ class ValidateOpt extends StatelessWidget {
             ),
             SizedBox(height: 20),
             CustomButton().darkButton('verify'.tr(), () {
-              viewModel.validateOpt(context, email);
+              viewModel.validateOpt(context, email, password: password);
             }),
             SizedBox(height: 20),
             ValueListenableBuilder(

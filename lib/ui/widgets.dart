@@ -1,3 +1,6 @@
+export 'package:my_flutter_mvvm_template/ui/auth/view_model/reset_pwd.dart';
+export 'package:my_flutter_mvvm_template/ui/auth/widget/reset_pwd.dart';
+
 export 'package:my_flutter_mvvm_template/ui/auth/view_model/validate_otp.dart';
 
 export 'package:my_flutter_mvvm_template/ui/auth/widget/validate_otp.dart';

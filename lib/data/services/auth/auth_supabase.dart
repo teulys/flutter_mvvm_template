@@ -15,12 +15,6 @@ class AuthSupabaseService extends AuthService {
   }
 
   @override
-  Future<Sessions?> resetPassword(String email) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Result<Sessions>> signInWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -109,16 +103,16 @@ class AuthSupabaseService extends AuthService {
   }
 
   @override
-  Future<Result<Sessions>> signUpWithEmailAndPassword(
+  Future<Result<Users>> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
       final AuthResponse res =
           await supabase.auth.signUp(email: email, password: password);
 
-      Sessions? session = _mapSession(res);
+      Users? user = _mapUser(res);
 
-      if (session != null) {
-        return Result.ok(session);
+      if (user != null) {
+        return Result.ok(user);
       } else {
         return Result.error(Exception('generalError'.tr()));
       }
@@ -182,21 +176,66 @@ class AuthSupabaseService extends AuthService {
   Users? _mapUser(AuthResponse res) {
     final User? user = res.user;
 
-    return (user != null)
-        ? Users(
-            id: user.id,
-            aud: user.aud,
-            email: user.email ?? '',
-            role: user.role,
-          )
-        : null;
+    if (user != null) {
+      return Users(
+        id: user.id,
+        aud: user.aud,
+        email: user.email ?? '',
+        role: user.role,
+      );
+    } else {
+      return null;
+    }
   }
 
   @override
-  Future<void> resendOTP(String email) async {
-    await supabase.auth.resend(
-      type: OtpType.signup,
-      email: email,
-    );
+  Future<Result<String>> sendResetPasswordOTP(String email) async {
+    try {
+      await supabase.auth.resetPasswordForEmail(email);
+
+      return Result.ok('otpTextMessenge'.tr(args: [email]));
+    } catch (e) {
+      return Result.error(Exception('generalError'.tr()));
+    }
+  }
+
+  @override
+  Future<Result<String>> verifyOTPAndResetPassword(
+      String email, String otp, String newPassword) async {
+    try {
+      AuthResponse res = await supabase.auth.verifyOTP(
+        type: OtpType.recovery,
+        email: email,
+        token: otp,
+      );
+
+      Sessions? session = _mapSession(res);
+
+      if (session != null) {
+        // Una vez verificado el OTP, cambiamos la contraseña
+        final response = await supabase.auth
+            .updateUser(UserAttributes(password: newPassword));
+
+        if (response.user != null) {
+          return Result.ok('resetPwdSusses'.tr());
+        } else {
+          return Result.error(Exception('resetPwdError'.tr()));
+        }
+      } else {
+        return Result.error(Exception('otpError'.tr()));
+      }
+    } on AuthApiException catch (e) {
+      // Handle specific AuthApiException
+      if (e.statusCode == 400) {
+        return Result.error(Exception('invalidOTP'.tr()));
+      } else {
+        print('Authentication failed: ${e.message}');
+        return Result.error(Exception('generalError'.tr()));
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('An unexpected error occurred: ${e.toString()}');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 }

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:my_flutter_mvvm_template/data/services/auth/auth_services.dart';
 import 'package:my_flutter_mvvm_template/domain/models/models.dart';
 import 'package:my_flutter_mvvm_template/utils/utils.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepository {
   final AuthService _authService;
@@ -34,7 +33,7 @@ class AuthRepository {
   Future<Result<String>> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
-      Result<Sessions> sesion =
+      Result<Users> sesion =
           await _authService.signUpWithEmailAndPassword(email, password);
 
       if (sesion is Ok) {
@@ -49,8 +48,20 @@ class AuthRepository {
     }
   }
 
-  Future<void> resetPassword(String email) async {
-    await _authService.resetPassword(email);
+  Future<Result<String>> resetPassword(String email) async {
+    try {
+      final res = await _authService.sendResetPasswordOTP(email);
+
+      if (res is Ok) {
+        return res;
+      } else {
+        return Result.error((res as Error).error);
+      }
+    } catch (e) {
+      // Handle the error appropriately here
+      print('Error sending reset password OTP: $e');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 
   Future<Result<String>> verifyOTP(String email, String otp) async {
@@ -73,7 +84,21 @@ class AuthRepository {
     }
   }
 
-  Future<void> resendOTP(String email) async {
-    await _authService.resendOTP(email);
+  Future<Result<String>> changePwd(
+      String email, String otp, String newPass) async {
+    try {
+      final res =
+          await _authService.verifyOTPAndResetPassword(email, otp, newPass);
+
+      if (res is Ok) {
+        return res;
+      } else {
+        return Result.error((res as Error).error);
+      }
+    } catch (e) {
+      // Handle the error appropriately here
+      print('Error changing password: $e');
+      return Result.error(Exception('generalError'.tr()));
+    }
   }
 }

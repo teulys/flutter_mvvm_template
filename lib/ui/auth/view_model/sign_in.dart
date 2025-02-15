@@ -94,15 +94,6 @@ class SignInViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, '/home');
   }
 
-  Future<void> forgotPassword() async {
-    try {
-      String email = emailController.text;
-      await _authRepository.resetPassword(email);
-    } catch (e) {
-      print(e);
-    }
-  }
-
   void goToSignUp(BuildContext context) {
     // Navigate to the sign up page
     Navigator.pushNamed(context, '/signUp');
@@ -110,6 +101,6 @@ class SignInViewModel extends ChangeNotifier {
 
   void goToForgotPassword(BuildContext context) {
     // Navigate to the forgot password page
-    Navigator.pushNamed(context, '/forgot_password');
+    Navigator.pushNamed(context, '/resetPwd');
   }
 }
